@@ -24,7 +24,7 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['dqxy','MelodyRackham','teaguehannam','Istott','justinruss24','mmussel','ousbayaa'];
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -53,3 +53,63 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+
+  function Card(data) {
+    const newCard = document.createElement('div'),
+          newImage = document.createElement('img'),
+          title = document.createElement('h1'),
+          login = document.createElement('p'),
+          rdiv = document.createElement('div'),
+          location = document.createElement('p'),
+          profile = document.createElement('p'),
+          f1 = document.createElement('p'),
+          f2 = document.createElement('p'),
+          bio = document.createElement('p')
+        
+     title.textContent = `${data.name}`;
+     login.textContent = data.login;
+     newImage.src = data.avatar_url;
+     location.textContent = `Location: ${data.location}`;
+     profile.innerHTML = `<a href="${data.html_url}">${data.html_url}</a>`;
+     f1.textContent = `Followers: ${data.followers}`;
+     f2.textContent = `Following: ${data.following}`;
+     bio.textContent = `Bio: ${data.bio}`;
+     
+     newImage.classList.add('image');
+     newCard.classList.add('card');
+     rdiv.classList.add('card-info');
+     login.classList.add('username');
+
+
+     newCard.append(newImage);
+     newCard.append(rdiv);
+     rdiv.append(title);
+     rdiv.append(login);
+     rdiv.append(location);
+     rdiv.append(profile);
+     rdiv.append(f1);
+     rdiv.append(f2);
+     rdiv.append(bio);
+     
+     return newCard;
+   }
+   
+ const entryPoint = document.querySelector('.cards');
+ 
+ followersArray.forEach(myFunction);
+
+ function myFunction(item, index) {
+  
+ 
+
+
+ axios.get("https://api.github.com/users/" + item)
+   .then(response => {
+     entryPoint.append(Card(response.data));
+   })
+   .catch(error => {
+   console.log("the data was not returned", error)
+ });
+
+}
